@@ -13,9 +13,16 @@
         <button id="fetchBtn">Get Weather</button>
         <div id="weather"></div>
         <div id="userList"></div>
-
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        $(document).ready(function() {
+      $("#fetchBtn").click(function() {
+        $("h2").text("Hey! Here is your Weather Details");
+      });
+    });
+      </script>
+      <script src="script.js"></script>
     </section>
-    <script src="script.js"></script>
 </body>
 </html>
 
