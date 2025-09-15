@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editable To-Do List</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: rgb(247, 252, 252);
+    }
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 100px;
+      border: 1px solid #201f1f;
+      border-radius: 5px;
+      background-color: #a774b1;
+    }
+    #todo-list {
+      list-style-type: none;
+      padding: 0;
+      background-color: antiquewhite;
+    }
+    #todo-list li {
+      padding: 8px;
+      border-bottom: 1px solid #1b1717;
+      cursor: pointer;
+    }
+    #todo-list li:hover {
+      background-color: #f67474;
+    }
+    .edit {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .edit:focus {
+      outline: none;
+      border: 2px solid #4CAF50;
+    background-color: #e0f7e0;
+    }
+    
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>My To-Do List</h2>
+  <input type="text" id="new-task" placeholder="Add a new task">
+  <button id="add-btn">Add</button>
+
+  <ul id="todo-list">
+    <li>Buy groceries</li>
+    <li>Complete assingment</li>
+    <li>Go for a walk</li>
+  </ul>
+
+  <script>
+    $(document).ready(function() {
+      // Add new tasks
+      $("#add-btn").click(function() {
+        let taskText = $("#new-task").val().trim();
+        if (taskText) {
+          $("#todo-list").append("<li>" + taskText + "</li>");
+          $("#new-task").val(""); // clear input
+        }
+      });
+
+      // Double-click to edit task
+      $("#todo-list").on("dblclick", "li", function() {
+        let currentText = $(this).text(); // .text() → get li text
+        let input = $("<input type='text' class='edit'>").val(currentText); // .val() → set
+        $(this).html(input); // .html() → replace with input
+        input.focus();
+
+        // Save on Enter key
+        input.keydown(function(e) { // .keydown()
+          if (e.key === "Enter") {
+            let newText = $(this).val(); // .val() → get updated text
+            $(this).parent().replaceWith("<li>" + newText + "</li>"); // .replaceWith()
+          }
+        });
+
+        // Save on blur (click outside)
+        input.blur(function() { // .blur()
+          let newText = $(this).val();
+          $(this).parent().replaceWith("<li>" + newText + "</li>");
+        });
+      });
+    });
+    
+  </script>
+</div>
+</body>
+</html>
+
